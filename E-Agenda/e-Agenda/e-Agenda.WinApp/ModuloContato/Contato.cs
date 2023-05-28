@@ -4,8 +4,8 @@ namespace e_Agenda.WinApp.ModuloContato
 {
     public class Contato : EntidadeBase<Contato>
     {
-        public string nome;
-        public string telefone;
+        public string nome { get; set; }
+        public string telefone { get; set; }
         public string email;
         public string cargo;
         public string empresa;
@@ -30,7 +30,7 @@ namespace e_Agenda.WinApp.ModuloContato
 
         public override string ToString()
         {
-            return "Id: " + id + ", " + nome + ", Empresa: " + empresa;
+            return $"Id: {id} - {nome} | Telefone: {telefone} | Empresa: {empresa}";
         }
 
         public override string[] Validar()

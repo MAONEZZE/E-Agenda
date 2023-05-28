@@ -28,24 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            listTarefas = new ListBox();
+            listBox_tarefas = new ListBox();
             SuspendLayout();
             // 
-            // listTarefas
+            // listBox_tarefas
             // 
-            listTarefas.Dock = DockStyle.Fill;
-            listTarefas.FormattingEnabled = true;
-            listTarefas.ItemHeight = 15;
-            listTarefas.Location = new Point(0, 0);
-            listTarefas.Name = "listTarefas";
-            listTarefas.Size = new Size(522, 383);
-            listTarefas.TabIndex = 0;
+            listBox_tarefas.Dock = DockStyle.Fill;
+            listBox_tarefas.FormattingEnabled = true;
+            listBox_tarefas.ItemHeight = 15;
+            listBox_tarefas.Location = new Point(0, 0);
+            listBox_tarefas.Name = "listBox_tarefas";
+            listBox_tarefas.Size = new Size(522, 383);
+            listBox_tarefas.TabIndex = 0;
             // 
             // ListagemTarefaControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(listTarefas);
+            Controls.Add(listBox_tarefas);
             Name = "ListagemTarefaControl";
             Size = new Size(522, 383);
             ResumeLayout(false);
@@ -53,6 +53,6 @@
 
         #endregion
 
-        private ListBox listTarefas;
+        private ListBox listBox_tarefas;
     }
 }

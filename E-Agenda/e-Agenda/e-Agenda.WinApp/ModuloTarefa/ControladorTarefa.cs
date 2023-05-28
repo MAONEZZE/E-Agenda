@@ -1,6 +1,4 @@
-﻿using e_Agenda.WinApp.Compartilhado;
-
-namespace e_Agenda.WinApp.ModuloTarefa
+﻿namespace e_Agenda.WinApp.ModuloTarefa
 {
     public class ControladorTarefa : ControladorBase
     {
@@ -33,7 +31,7 @@ namespace e_Agenda.WinApp.ModuloTarefa
 
         public override void Editar()
         {
-            Tarefa tarefa = listagemTarefa.ObterContatoSelecionado();
+            Tarefa tarefa = listagemTarefa.ObterTarefaSelecionada();
 
             if (tarefa == null)
             {
@@ -41,12 +39,11 @@ namespace e_Agenda.WinApp.ModuloTarefa
                     "Edição de Tarefas",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
-
-                return;
             }
             else
             {
                 TelaTarefaForm telaTarefa = new TelaTarefaForm();
+
                 telaTarefa.Tarefa = tarefa;
 
                 DialogResult opcaoEscolhida = telaTarefa.ShowDialog();
@@ -55,21 +52,14 @@ namespace e_Agenda.WinApp.ModuloTarefa
                 {
                     repositorioTarefa.Editar(telaTarefa.Tarefa.id, telaTarefa.Tarefa);
 
-                    CarregarContatos();
+                    CarregarTarefas();
                 }
             }
         }
 
-        private void CarregarContatos()
-        {
-            List<Tarefa> tarefas = repositorioTarefa.SelecionarTodos();//esta pegando a lista de Contatos e jogando para o contatos
-
-            listagemTarefa.AtualizarRegistros(tarefas);
-        }
-
         public override void Excluir()
         {
-            Tarefa tarefa = listagemTarefa.ObterContatoSelecionado();
+            Tarefa tarefa = listagemTarefa.ObterTarefaSelecionada();
 
             if (tarefa == null)
             {
@@ -77,8 +67,6 @@ namespace e_Agenda.WinApp.ModuloTarefa
                     "Exclusão de Contatos",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
-
-                return;
             }
             else
             {
@@ -89,7 +77,7 @@ namespace e_Agenda.WinApp.ModuloTarefa
                 {
                     repositorioTarefa.Excluir(tarefa);
 
-                    CarregarContatos();
+                    CarregarTarefas();
                 }
             }
         }
@@ -106,16 +94,83 @@ namespace e_Agenda.WinApp.ModuloTarefa
 
                 repositorioTarefa.Inserir(tarefa);
 
-                CarregarContatos();
+                CarregarTarefas();
             }
+        }
+
+        public override void AddItem()
+        {
+            Tarefa tarefaSelec = listagemTarefa.ObterTarefaSelecionada();
+
+            if (tarefaSelec == null)
+            {
+                MessageBox.Show($"Selecione uma tarefa primeiro!",
+                    "Edição de Tarefas",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                TelaCadastroItem telaCadItem = new TelaCadastroItem(tarefaSelec);
+
+                DialogResult opcaoEscolhida = telaCadItem.ShowDialog();
+
+                if(opcaoEscolhida == DialogResult.OK)
+                {
+                    List<ItemTarefa> listaItens = telaCadItem.ObterItensCad();
+
+                    tarefaSelec.AdicionarItens(listaItens.ElementAt<ItemTarefa>(listaItens.Count - 1));
+
+                    repositorioTarefa.Editar(tarefaSelec.id, tarefaSelec);
+                    CarregarTarefas();
+                }
+            }
+        }
+
+        public override void Filtrar() //Falta terminar aqui
+        {
+            TelaTarefaFiltro telaFiltroTarefa = new TelaTarefaFiltro();
+
+            DialogResult opcaoEscolhida = telaFiltroTarefa.ShowDialog();
+
+            if (opcaoEscolhida == DialogResult.OK)
+            {
+                TipoOpcaoFiltragem opFiltragem = telaFiltroTarefa.OpcaoEscolhida();
+
+                switch (opFiltragem)
+                {
+                    case TipoOpcaoFiltragem.Todas:
+                        CarregarTarefas();
+                        break;
+
+                    case TipoOpcaoFiltragem.Pendentes:
+
+                        break;
+
+                    case TipoOpcaoFiltragem.Concluidas:
+
+                        break;
+
+                    case TipoOpcaoFiltragem.DataCriacao:
+
+                        break;
+                }
+            }
+        }
+
+        public enum TipoOpcaoFiltragem
+        {
+            Todas, Pendentes, Concluidas, DataCriacao
         }
 
         public override UserControl ObterListagem()
         {
             if (listagemTarefa == null)
+            {
                 listagemTarefa = new ListagemTarefaControl();
+            }
 
-            CarregarContatos();
+            CarregarTarefas();
 
             return listagemTarefa;
         }
@@ -123,6 +178,13 @@ namespace e_Agenda.WinApp.ModuloTarefa
         public override string ObterTipoCadastro()
         {
             return "Cadastro de Tarefas";
+        }
+
+        private void CarregarTarefas()
+        {
+            List<Tarefa> listaTarefas = repositorioTarefa.SelecionarTodos();//esta pegando a lista de Tarefas e jogando para o tarefas
+
+            listagemTarefa.AtualizarRegistros(listaTarefas);
         }
     }
 }

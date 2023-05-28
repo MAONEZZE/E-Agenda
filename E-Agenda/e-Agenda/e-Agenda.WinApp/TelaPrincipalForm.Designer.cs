@@ -46,13 +46,13 @@
             toolStripSeparator2 = new ToolStripSeparator();
             btn_addItem = new ToolStripButton();
             btn_listarItens = new ToolStripButton();
-            btn_filtrarTarefas = new ToolStripButton();
+            btn_filtrar = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
             btn_concluidos = new ToolStripButton();
             btn_abertos = new ToolStripButton();
             toolStripSeparator3 = new ToolStripSeparator();
             labelTipoCadastro = new ToolStripLabel();
-            panelRegistros = new Panel();
+            pnl_principal = new Panel();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             toolStrip1.SuspendLayout();
@@ -63,7 +63,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { cadastrosMenuItem, relatóriosToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(642, 24);
+            menuStrip1.Size = new Size(633, 24);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -123,9 +123,9 @@
             // statusStrip1
             // 
             statusStrip1.Items.AddRange(new ToolStripItem[] { lbl_statusRodape });
-            statusStrip1.Location = new Point(0, 372);
+            statusStrip1.Location = new Point(0, 359);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(642, 22);
+            statusStrip1.Size = new Size(633, 22);
             statusStrip1.TabIndex = 1;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -136,10 +136,10 @@
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { btn_inserir, btn_editar, btn_excluir, toolStripSeparator2, btn_addItem, btn_listarItens, btn_filtrarTarefas, toolStripSeparator1, btn_concluidos, btn_abertos, toolStripSeparator3, labelTipoCadastro });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { btn_inserir, btn_editar, btn_excluir, toolStripSeparator2, btn_addItem, btn_filtrar, btn_listarItens, toolStripSeparator1, btn_concluidos, btn_abertos, toolStripSeparator3, labelTipoCadastro });
             toolStrip1.Location = new Point(0, 24);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(642, 45);
+            toolStrip1.Size = new Size(633, 45);
             toolStrip1.TabIndex = 2;
             toolStrip1.Text = "toolStrip1";
             // 
@@ -196,6 +196,7 @@
             btn_addItem.Size = new Size(42, 42);
             btn_addItem.Text = "Adicionar Item";
             btn_addItem.ToolTipText = "Adicionar Item";
+            btn_addItem.Click += btn_addItem_Click;
             // 
             // btn_listarItens
             // 
@@ -210,19 +211,19 @@
             btn_listarItens.Text = "Visualizar Itens";
             btn_listarItens.ToolTipText = "Visualizar Itens";
             // 
-            // btn_filtrarTarefas
+            // btn_filtrar
             // 
-            btn_filtrarTarefas.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            btn_filtrarTarefas.Enabled = false;
-            btn_filtrarTarefas.Image = Properties.Resources.filter_list_FILL0_wght400_GRAD0_opsz24;
-            btn_filtrarTarefas.ImageScaling = ToolStripItemImageScaling.None;
-            btn_filtrarTarefas.ImageTransparentColor = Color.Magenta;
-            btn_filtrarTarefas.Name = "btn_filtrarTarefas";
-            btn_filtrarTarefas.Padding = new Padding(7);
-            btn_filtrarTarefas.Size = new Size(42, 42);
-            btn_filtrarTarefas.Text = "Filtro";
-            btn_filtrarTarefas.ToolTipText = "Filtro";
-            btn_filtrarTarefas.Click += btn_filtrarTarefas_Click;
+            btn_filtrar.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            btn_filtrar.Enabled = false;
+            btn_filtrar.Image = Properties.Resources.filter_list_FILL0_wght400_GRAD0_opsz24;
+            btn_filtrar.ImageScaling = ToolStripItemImageScaling.None;
+            btn_filtrar.ImageTransparentColor = Color.Magenta;
+            btn_filtrar.Name = "btn_filtrar";
+            btn_filtrar.Padding = new Padding(7);
+            btn_filtrar.Size = new Size(42, 42);
+            btn_filtrar.Text = "Filtro";
+            btn_filtrar.ToolTipText = "Filtro";
+            btn_filtrar.Click += btn_filtrarTarefas_Click;
             // 
             // toolStripSeparator1
             // 
@@ -266,21 +267,22 @@
             labelTipoCadastro.Size = new Size(75, 42);
             labelTipoCadastro.Text = "tipoCadastro";
             // 
-            // panelRegistros
+            // pnl_principal
             // 
-            panelRegistros.BorderStyle = BorderStyle.FixedSingle;
-            panelRegistros.Dock = DockStyle.Fill;
-            panelRegistros.Location = new Point(0, 69);
-            panelRegistros.Name = "panelRegistros";
-            panelRegistros.Size = new Size(642, 303);
-            panelRegistros.TabIndex = 3;
+            pnl_principal.BackColor = Color.White;
+            pnl_principal.BorderStyle = BorderStyle.FixedSingle;
+            pnl_principal.Dock = DockStyle.Fill;
+            pnl_principal.Location = new Point(0, 69);
+            pnl_principal.Name = "pnl_principal";
+            pnl_principal.Size = new Size(633, 290);
+            pnl_principal.TabIndex = 3;
             // 
             // TelaPrincipalForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(642, 394);
-            Controls.Add(panelRegistros);
+            ClientSize = new Size(633, 381);
+            Controls.Add(pnl_principal);
             Controls.Add(toolStrip1);
             Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
@@ -316,11 +318,11 @@
         private ToolStripButton btn_inserir;
         private ToolStripButton btn_editar;
         private ToolStripButton btn_excluir;
-        private Panel panelRegistros;
+        private Panel pnl_principal;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripLabel labelTipoCadastro;
         private ToolStripButton btn_listarItens;
-        private ToolStripButton btn_filtrarTarefas;
+        private ToolStripButton btn_filtrar;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripButton btn_addItem;
         private ToolStripButton btn_concluidos;

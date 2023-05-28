@@ -11,17 +11,17 @@ namespace e_Agenda.WinApp.ModuloTarefa
 
         public void AtualizarRegistros(List<Tarefa> tarefas)
         {
-            listTarefas.Items.Clear();
+            listBox_tarefas.Items.Clear();
 
             foreach (Tarefa item in tarefas)
             {
-                listTarefas.Items.Add(item);
+                listBox_tarefas.Items.Add(item);
             }
         }
 
-        public Tarefa ObterContatoSelecionado()
+        public Tarefa ObterTarefaSelecionada()
         {
-            return (Tarefa)listTarefas.SelectedItem;
+            return (Tarefa)listBox_tarefas.SelectedItem;
         }
     }
 }

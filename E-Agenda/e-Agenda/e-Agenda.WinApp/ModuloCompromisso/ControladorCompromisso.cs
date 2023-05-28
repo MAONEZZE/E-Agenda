@@ -1,5 +1,4 @@
-﻿using e_Agenda.WinApp.Compartilhado;
-using e_Agenda.WinApp.ModuloContato;
+﻿using e_Agenda.WinApp.ModuloContato;
 
 namespace e_Agenda.WinApp.ModuloCompromisso
 {
@@ -23,13 +22,13 @@ namespace e_Agenda.WinApp.ModuloCompromisso
 
         public override string ToolTipFiltrar => "Filtrar Compromissos";
 
-        public override string ToolTipInserirItens => "Inserir item em uma Tarefa existente";
+        public override string ToolTipInserirItens => "Inserir item";
 
-        public override string ToolTipVisualizarAbertos => "Visualizar tarefas em aberto";
+        public override string ToolTipVisualizarAbertos => "Visualizar em abertos";
 
-        public override string ToolTipVisualizarConcluidos => "Visualizar tarefas concluidas";
+        public override string ToolTipVisualizarConcluidos => "Visualizar concluidos";
 
-        public override string ToolTipListar => "Listar itens da tarefas";
+        public override string ToolTipListar => "Listar itens";
 
         public override void Inserir()
         {
@@ -126,21 +125,21 @@ namespace e_Agenda.WinApp.ModuloCompromisso
                 DateTime dataInicio = telaFiltroComp.ObterDataInicio;
                 DateTime dataFim = telaFiltroComp.ObterDataFinal;
 
-                if(status == StatusCompEnum.Todos)
+                switch (status)
                 {
-                    CarregarCompromisso();
-                }
-                else if(status == StatusCompEnum.Passados)
-                {
-                    compTemporais = repCompromisso.SelecionarCompPassados(DateTime.Now);
+                    case StatusCompEnum.Todos:
+                        CarregarCompromisso();
+                        break;
 
-                    CarregarCompromisso(compTemporais);
-                }
-                else if(status == StatusCompEnum.Futuros)
-                {
-                    compTemporais = repCompromisso.SelecionarCompFuturos(dataInicio, dataFim);
+                    case StatusCompEnum.Passados:
+                        compTemporais = repCompromisso.SelecionarCompPassados(DateTime.Now);
+                        CarregarCompromisso(compTemporais);
+                        break;
 
-                    CarregarCompromisso(compTemporais);
+                    case StatusCompEnum.Futuros:
+                        compTemporais = repCompromisso.SelecionarCompFuturos(dataInicio, dataFim);
+                        CarregarCompromisso(compTemporais);
+                        break;
                 }
             }
 

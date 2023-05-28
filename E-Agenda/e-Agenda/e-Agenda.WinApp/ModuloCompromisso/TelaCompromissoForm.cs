@@ -15,6 +15,13 @@ namespace e_Agenda.WinApp.ModuloCompromisso
             this.listaContato = listaContato;
 
             CarregadorContatos();
+
+            this.ConfigurarTelas();
+
+            txb_online.Enabled = false;
+            txb_presencial.Enabled = false;
+
+            cbox_contato.DisplayMember = "nome";
         }
 
         public Compromisso Compromisso
@@ -24,8 +31,8 @@ namespace e_Agenda.WinApp.ModuloCompromisso
                 txb_id.Text = Convert.ToString(value.id);
                 txb_assunto.Text = value.assunto;
                 txb_data.Value = value.data;
-                txb_horaInicio.Value = value.data + value.horaInicio;
-                txb_horaFinal.Value = value.data + value.horaFinal;
+                txb_horaInicio.Value = DateTime.Now.Date.Add(value.horaInicio);
+                txb_horaFinal.Value = DateTime.Now.Date.Add(value.horaFinal);
                 cbox_contato.SelectedItem = value.contato;
 
                 if (value.tipoComp == TipoCompromissoEnum.Presencial)
@@ -50,13 +57,14 @@ namespace e_Agenda.WinApp.ModuloCompromisso
         {
             foreach (Contato cto in this.listaContato)
             {
+
                 cbox_contato.Items.Add(cto);
             }
         }
 
         private void btn_gravar_Click(object sender, EventArgs e)
         {
-            string local;
+            string local = null;
             string assunto = txb_assunto.Text;
 
             DateTime data = txb_data.Value;
@@ -73,7 +81,7 @@ namespace e_Agenda.WinApp.ModuloCompromisso
             {
                 local = txb_online.Text;
             }
-            else
+            else if(rdb_online.Checked)
             {
                 local = txb_presencial.Text;
             }
@@ -81,7 +89,7 @@ namespace e_Agenda.WinApp.ModuloCompromisso
             compromisso = new Compromisso(assunto, data, horaInicio, horaFinal, contato, local, tipo);
             //aqui cria o objeto compromisso que pode ser acessado pela propriedade Compromisso lá em cima
 
-            string[] erros = contato.Validar();
+            string[] erros = compromisso.Validar();
 
             if (erros.Length > 0)
             {

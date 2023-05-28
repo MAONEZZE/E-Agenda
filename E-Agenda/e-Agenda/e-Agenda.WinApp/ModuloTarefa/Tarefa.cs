@@ -6,11 +6,21 @@ namespace e_Agenda.WinApp.ModuloTarefa
     {
         public string titulo;
         public string prioridade;
+        public DateTime data;
+        public List<ItemTarefa> listaItens;
+        public decimal percConcluido;
 
-        public Tarefa(string titulo, string prioridade)
+        public Tarefa(string titulo, string prioridade, DateTime data)
         {
             this.titulo = titulo;
             this.prioridade = prioridade;
+            this.data = data;
+            this.listaItens = new List<ItemTarefa>();
+        }
+
+        private void CalcPercentual()
+        {
+
         }
 
         public override void AtualizarInformacoes(Tarefa registrosAtualizados)
@@ -21,7 +31,7 @@ namespace e_Agenda.WinApp.ModuloTarefa
 
         public override string ToString()
         {
-            return "Id: " + id + ", " + titulo + ", Prioridade: " + prioridade;
+            return $"Id: {id} - {titulo} | Prioridade: {prioridade} ";// "| Qtd de Itens: {listaItens.Count} | Percentual Concluido {percConcluido}";
         }
 
         public override string[] Validar()
@@ -38,6 +48,11 @@ namespace e_Agenda.WinApp.ModuloTarefa
             }
 
             return listaErros.ToArray();
+        }
+
+        public void AdicionarItens(ItemTarefa item)
+        {
+            listaItens.Add(item);
         }
     }
 }

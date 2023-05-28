@@ -13,6 +13,7 @@
         public virtual string ToolTipVisualizarAbertos { get; }
         public virtual string ToolTipVisualizarConcluidos { get; }
         public virtual void Filtrar() { }
+        public virtual void AddItem() { }
         public abstract void Inserir();
         public abstract void Editar();
         public abstract void Excluir();

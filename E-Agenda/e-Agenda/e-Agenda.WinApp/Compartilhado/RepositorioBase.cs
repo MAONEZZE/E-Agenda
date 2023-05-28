@@ -4,7 +4,7 @@
         where TEntidade : EntidadeBase<TEntidade>
     {
         protected List<TEntidade> listaRegistros;
-        protected int contadorRegistros = 0;
+        private int contadorRegistros = 0;
 
         public int Contador
         {
@@ -16,11 +16,11 @@
 
         public virtual void Inserir(TEntidade registro)
         {
-            contadorRegistros++;
-
             registro.id = contadorRegistros;
 
             listaRegistros.Add(registro);
+
+            contadorRegistros++;
         }
 
         public virtual void Editar(int id, TEntidade registroAtualizado)
@@ -50,8 +50,17 @@
 
         public virtual TEntidade SelecionarPorId(int id)
         {
-            if (listaRegistros.Exists(registro => registro.id == id))
-                return listaRegistros.First(registro => registro.id == id);
+
+            foreach(TEntidade ent in listaRegistros)
+            {
+                if(ent.id == id)
+                {
+                    return ent;
+                }
+            }
+
+            //if (listaRegistros.Exists(registro => registro.id == id))
+              //  return listaRegistros.First(registro => registro.id == id);
 
             return null;
         }

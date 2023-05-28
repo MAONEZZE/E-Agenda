@@ -1,7 +1,4 @@
 ﻿using e_Agenda.WinApp.Compartilhado;
-using System.Reflection;
-using System.Security.Principal;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace e_Agenda.WinApp.ModuloContato
 {

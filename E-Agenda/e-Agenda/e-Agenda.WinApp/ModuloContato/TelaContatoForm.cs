@@ -11,7 +11,7 @@ namespace e_Agenda.WinApp.ModuloContato
         {
             InitializeComponent();
 
-            
+            this.ConfigurarTelas();
         }
 
         public Contato Contato

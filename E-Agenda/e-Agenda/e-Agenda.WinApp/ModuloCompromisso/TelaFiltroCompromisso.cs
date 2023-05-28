@@ -1,4 +1,5 @@
-﻿using System;
+﻿using e_Agenda.WinApp.Compartilhado;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,11 @@ namespace e_Agenda.WinApp.ModuloCompromisso
         public TelaFiltroCompromisso()
         {
             InitializeComponent();
+
+            this.ConfigurarTelas();
+
+            txb_dataFim.Enabled = false;
+            txb_dataInicio.Enabled = false;
         }
 
         public ControladorCompromisso.StatusCompEnum ObterStatus()
@@ -33,9 +39,27 @@ namespace e_Agenda.WinApp.ModuloCompromisso
             }
         }
 
+        private void rb_todosComp_CheckedChanged(object sender, EventArgs e)
+        {
+            txb_dataFim.Enabled = false;
+            txb_dataInicio.Enabled = false;
+        }
+
+        private void rb_compPassados_CheckedChanged(object sender, EventArgs e)
+        {
+            txb_dataFim.Enabled = false;
+            txb_dataInicio.Enabled = false;
+        }
+
+        private void rb_compFuturos_CheckedChanged(object sender, EventArgs e)
+        {
+            txb_dataFim.Enabled = true;
+            txb_dataInicio.Enabled = true;
+        }
+
         public DateTime ObterDataInicio
         {
-            get 
+            get
             {
                 return txb_dataInicio.Value;
             }

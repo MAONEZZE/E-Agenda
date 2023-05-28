@@ -3,7 +3,7 @@ using e_Agenda.WinApp.ModuloContato;
 
 namespace e_Agenda.WinApp.ModuloCompromisso
 {
-    public class Compromisso : EntidadeBase<Compromisso>
+    public class Compromisso : EntidadeBase<Compromisso>//Arrumar a parte de editar
     {
         public string assunto;
         public DateTime data;
@@ -55,7 +55,7 @@ namespace e_Agenda.WinApp.ModuloCompromisso
 
         public override string ToString()
         {
-            return $"ID: {id}, Assunto: {assunto}, Data: {data}, Inicio: {horaInicio}";
+            return $"ID: {id} - Assunto: {assunto} | Data: {data} | Inicio: {horaInicio}";
         }
 
         public override string[] Validar()
@@ -78,10 +78,6 @@ namespace e_Agenda.WinApp.ModuloCompromisso
             else if (string.IsNullOrEmpty(Convert.ToString(horaFinal)))
             {
                 listaErros.Add("O campo do horário final é obrigatorio!");
-            }
-            else if (string.IsNullOrEmpty(Convert.ToString(contato)))
-            {
-                listaErros.Add("O campo do contato é obrigatorio!");
             }
             else if (string.IsNullOrEmpty(Convert.ToString(tipoComp)))
             {

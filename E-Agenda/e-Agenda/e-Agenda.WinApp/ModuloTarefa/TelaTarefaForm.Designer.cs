@@ -39,6 +39,9 @@
             rb_baixa = new RadioButton();
             rb_media = new RadioButton();
             rb_alta = new RadioButton();
+            label4 = new Label();
+            txb_data = new DateTimePicker();
+            label7 = new Label();
             gpBox_prioridades.SuspendLayout();
             SuspendLayout();
             // 
@@ -64,15 +67,15 @@
             label2.AutoSize = true;
             label2.Location = new Point(18, 78);
             label2.Name = "label2";
-            label2.Size = new Size(40, 15);
+            label2.Size = new Size(45, 15);
             label2.TabIndex = 2;
-            label2.Text = "Titulo:";
+            label2.Text = "Titulo*:";
             // 
             // txb_titulo
             // 
             txb_titulo.Location = new Point(64, 75);
             txb_titulo.Name = "txb_titulo";
-            txb_titulo.Size = new Size(178, 23);
+            txb_titulo.Size = new Size(140, 23);
             txb_titulo.TabIndex = 3;
             // 
             // label3
@@ -80,15 +83,15 @@
             label3.AutoSize = true;
             label3.Location = new Point(18, 120);
             label3.Name = "label3";
-            label3.Size = new Size(64, 15);
+            label3.Size = new Size(69, 15);
             label3.TabIndex = 4;
-            label3.Text = "Prioridade:";
+            label3.Text = "Prioridade*:";
             // 
             // btn_gravar
             // 
             btn_gravar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btn_gravar.DialogResult = DialogResult.OK;
-            btn_gravar.Location = new Point(173, 180);
+            btn_gravar.Location = new Point(258, 180);
             btn_gravar.Name = "btn_gravar";
             btn_gravar.Size = new Size(75, 23);
             btn_gravar.TabIndex = 8;
@@ -100,7 +103,7 @@
             // 
             btn_cancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btn_cancel.DialogResult = DialogResult.Cancel;
-            btn_cancel.Location = new Point(254, 180);
+            btn_cancel.Location = new Point(339, 180);
             btn_cancel.Name = "btn_cancel";
             btn_cancel.Size = new Size(75, 23);
             btn_cancel.TabIndex = 9;
@@ -151,11 +154,40 @@
             rb_alta.Text = "Alta";
             rb_alta.UseVisualStyleBackColor = true;
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(235, 78);
+            label4.Name = "label4";
+            label4.Size = new Size(34, 15);
+            label4.TabIndex = 11;
+            label4.Text = "Data:";
+            // 
+            // txb_data
+            // 
+            txb_data.Format = DateTimePickerFormat.Short;
+            txb_data.Location = new Point(275, 75);
+            txb_data.Name = "txb_data";
+            txb_data.Size = new Size(95, 23);
+            txb_data.TabIndex = 12;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(277, 9);
+            label7.Name = "label7";
+            label7.Size = new Size(137, 15);
+            label7.TabIndex = 21;
+            label7.Text = "* = Campos obtigatórios";
+            // 
             // TelaTarefaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(341, 215);
+            ClientSize = new Size(426, 215);
+            Controls.Add(label7);
+            Controls.Add(txb_data);
+            Controls.Add(label4);
             Controls.Add(gpBox_prioridades);
             Controls.Add(btn_cancel);
             Controls.Add(btn_gravar);
@@ -187,5 +219,8 @@
         private RadioButton rb_baixa;
         private RadioButton rb_media;
         private RadioButton rb_alta;
+        private Label label4;
+        private DateTimePicker txb_data;
+        private Label label7;
     }
 }

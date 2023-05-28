@@ -71,6 +71,7 @@
             rb_todosComp.TabStop = true;
             rb_todosComp.Text = "Visualizar todos os compromissos";
             rb_todosComp.UseVisualStyleBackColor = true;
+            rb_todosComp.CheckedChanged += rb_todosComp_CheckedChanged;
             // 
             // rb_compPassados
             // 
@@ -82,6 +83,7 @@
             rb_compPassados.TabStop = true;
             rb_compPassados.Text = "Visualizar compromissos passados";
             rb_compPassados.UseVisualStyleBackColor = true;
+            rb_compPassados.CheckedChanged += rb_compPassados_CheckedChanged;
             // 
             // rb_compFuturos
             // 
@@ -93,6 +95,7 @@
             rb_compFuturos.TabStop = true;
             rb_compFuturos.Text = "Visualizar compromissos futuros";
             rb_compFuturos.UseVisualStyleBackColor = true;
+            rb_compFuturos.CheckedChanged += rb_compFuturos_CheckedChanged;
             // 
             // txb_dataInicio
             // 
@@ -147,6 +150,7 @@
             MinimizeBox = false;
             Name = "TelaFiltroCompromisso";
             ShowIcon = false;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Filtro de Compromisso";
             ResumeLayout(false);
             PerformLayout();

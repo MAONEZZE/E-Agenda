@@ -1,16 +1,13 @@
-﻿using e_Agenda.WinApp.Compartilhado;
-using e_Agenda.WinApp.ModuloContato;
-
-namespace e_Agenda.WinApp.ModuloTarefa
+﻿namespace e_Agenda.WinApp.ModuloTarefa
 {
     public partial class TelaTarefaForm : Form
     {
-        private RepositorioBase<Tarefa> repBase;
         private Tarefa tarefa;
         public TelaTarefaForm()
         {
             InitializeComponent();
 
+            this.ConfigurarTelas();
         }
 
         public Tarefa Tarefa
@@ -40,10 +37,12 @@ namespace e_Agenda.WinApp.ModuloTarefa
             }
         }
 
+        
         private void btn_gravar_Click(object sender, EventArgs e)
         {
             string titulo = txb_titulo.Text;
-            string prioridade;
+            DateTime dataTarefa = txb_data.Value;
+            string prioridade = null;
 
             if (rb_alta.Checked)
             {
@@ -53,17 +52,12 @@ namespace e_Agenda.WinApp.ModuloTarefa
             {
                 prioridade = "Média";
             }
-            else
+            else if (rb_baixa.Checked)
             {
                 prioridade = "Baixa";
             }
 
-            tarefa = new Tarefa(titulo, prioridade);
-
-            if (txb_id.Text != "0")
-            {
-                tarefa.id = Convert.ToInt32(txb_id.Text);
-            }
+            tarefa = new Tarefa(titulo, prioridade, dataTarefa);
 
             string[] erros = tarefa.Validar();
 
@@ -75,6 +69,6 @@ namespace e_Agenda.WinApp.ModuloTarefa
             }
         }
 
-        
+
     }
 }
