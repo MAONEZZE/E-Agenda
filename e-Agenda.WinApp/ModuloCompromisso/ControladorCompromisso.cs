@@ -4,7 +4,7 @@ namespace e_Agenda.WinApp.ModuloCompromisso
 {
     public class ControladorCompromisso : ControladorBase
     {
-        private ListagemCompromissoControl listagemCompromisso;
+        private TabelaCompromissoControl tabelaCompromisso;
         private RepositorioContato repContato;
         private RepositorioCompromisso repCompromisso;
 
@@ -51,7 +51,7 @@ namespace e_Agenda.WinApp.ModuloCompromisso
 
         public override void Editar()
         {
-            Compromisso compSelecionado = listagemCompromisso.ObterCompromissoSelecionado();
+            Compromisso compSelecionado = ObterCompromissoSelecionado();
 
             if (compSelecionado == null)
             {
@@ -82,9 +82,16 @@ namespace e_Agenda.WinApp.ModuloCompromisso
             }
         }
 
+        private Compromisso ObterCompromissoSelecionado()
+        {
+            int id = tabelaCompromisso.ObterIdSelecionado();
+
+            return repCompromisso.SelecionarPorId(id);
+        }
+
         public override void Excluir()
         {
-            Compromisso compSelecionado = listagemCompromisso.ObterCompromissoSelecionado();
+            Compromisso compSelecionado = ObterCompromissoSelecionado();
 
             if (compSelecionado == null)
             {
@@ -147,7 +154,7 @@ namespace e_Agenda.WinApp.ModuloCompromisso
 
         private void CarregarCompromisso(List<Compromisso> compTemporais)
         {
-            listagemCompromisso.AtualizarRegistros(compTemporais);
+            tabelaCompromisso.AtualizarRegistros(compTemporais);
         }
 
         public enum StatusCompEnum
@@ -159,17 +166,19 @@ namespace e_Agenda.WinApp.ModuloCompromisso
         {
             List<Compromisso> comp = repCompromisso.SelecionarTodos();//esta pegando a lista de Compromisso e jogando para o contatos
 
-            listagemCompromisso.AtualizarRegistros(comp);
+            tabelaCompromisso.AtualizarRegistros(comp);
         }
 
         public override UserControl ObterListagem()
         {
-            if (listagemCompromisso == null)
-                listagemCompromisso = new ListagemCompromissoControl();
+            if (tabelaCompromisso == null)
+            {
+                tabelaCompromisso = new TabelaCompromissoControl();
+            }
 
             CarregarCompromisso();
 
-            return listagemCompromisso;
+            return tabelaCompromisso;
         }
 
         public override string ObterTipoCadastro()

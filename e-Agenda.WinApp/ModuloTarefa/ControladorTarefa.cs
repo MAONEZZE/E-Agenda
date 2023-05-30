@@ -1,16 +1,18 @@
-﻿namespace e_Agenda.WinApp.ModuloTarefa
+﻿using e_Agenda.WinApp.ModuloCompromisso;
+
+namespace e_Agenda.WinApp.ModuloTarefa
 {
     public class ControladorTarefa : ControladorBase
     {
         //Além da prioridade, uma tarefa deve conter: o título, a data de criação, data de
         //conclusão e o percentual concluído.
 
-        private RepositorioTarefa repositorioTarefa;
-        private ListagemTarefaControl listagemTarefa;
+        private RepositorioTarefa repTarefa;
+        private TabelaTarefaControl tabelaTarefas;
 
-        public ControladorTarefa(RepositorioTarefa repositorioContato)
+        public ControladorTarefa(RepositorioTarefa repositorioTarefa)
         {
-            this.repositorioTarefa = repositorioContato;
+            this.repTarefa = repositorioTarefa;
         }
 
         public override string ToolTipInserir => "Inserir nova Tarefa"; 
@@ -31,7 +33,7 @@
 
         public override void Editar()
         {
-            Tarefa tarefa = listagemTarefa.ObterTarefaSelecionada();
+            Tarefa tarefa = ObterTarefaSelecionada();
 
             if (tarefa == null)
             {
@@ -50,16 +52,23 @@
 
                 if (opcaoEscolhida == DialogResult.OK)
                 {
-                    repositorioTarefa.Editar(telaTarefa.Tarefa.id, telaTarefa.Tarefa);
+                    repTarefa.Editar(telaTarefa.Tarefa.id, telaTarefa.Tarefa);
 
                     CarregarTarefas();
                 }
             }
         }
 
+        private Tarefa ObterTarefaSelecionada()
+        {
+            int id = tabelaTarefas.ObterIdSelecionado();
+
+            return repTarefa.SelecionarPorId(id);
+        }
+
         public override void Excluir()
         {
-            Tarefa tarefa = listagemTarefa.ObterTarefaSelecionada();
+            Tarefa tarefa = ObterTarefaSelecionada();
 
             if (tarefa == null)
             {
@@ -75,7 +84,7 @@
 
                 if (opcaoEscolhida == DialogResult.OK)
                 {
-                    repositorioTarefa.Excluir(tarefa);
+                    repTarefa.Excluir(tarefa);
 
                     CarregarTarefas();
                 }
@@ -92,20 +101,20 @@
             {
                 Tarefa tarefa = telaTarefa.Tarefa;
 
-                repositorioTarefa.Inserir(tarefa);
+                repTarefa.Inserir(tarefa);
 
                 CarregarTarefas();
             }
         }
 
-        public override void AddItem()
+        public override void AddItem()//esta duplicando quando tenta adicionar outro item, apos fechar essa tela
         {
-            Tarefa tarefaSelec = listagemTarefa.ObterTarefaSelecionada();
+            Tarefa tarefaSelec = ObterTarefaSelecionada();
 
             if (tarefaSelec == null)
             {
                 MessageBox.Show($"Selecione uma tarefa primeiro!",
-                    "Edição de Tarefas",
+                    "Adição de itens a Tarefa",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
             }
@@ -117,11 +126,57 @@
 
                 if(opcaoEscolhida == DialogResult.OK)
                 {
+
+                    //tarefaSelec.AdicionarItens(telaCadItem.Item);
+
                     List<ItemTarefa> listaItens = telaCadItem.ObterItensCad();
+                    
+                    foreach(ItemTarefa item in listaItens)
+                    {
+                        tarefaSelec.AdicionarItens(item);
+                    }
 
-                    tarefaSelec.AdicionarItens(listaItens.ElementAt<ItemTarefa>(listaItens.Count - 1));
+                    //tarefaSelec.AdicionarItens(listaItens.ElementAt<ItemTarefa>(listaItens.Count - 1));
 
-                    repositorioTarefa.Editar(tarefaSelec.id, tarefaSelec);
+                    repTarefa.Editar(tarefaSelec.id, tarefaSelec);
+                    CarregarTarefas();
+                }
+            }
+        }
+
+        public override void ItensConcluidos()
+        {
+            Tarefa tarefaSelec = ObterTarefaSelecionada();
+
+            if (tarefaSelec == null)
+            {
+                MessageBox.Show($"Selecione uma tarefa primeiro!",
+                    "Conclusão de itens a Tarefas",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                TelaAtualizarItens telaAtualizaItem = new TelaAtualizarItens(tarefaSelec);
+
+                DialogResult opcaoEscolhida = telaAtualizaItem.ShowDialog();
+
+                if (opcaoEscolhida == DialogResult.OK)
+                {
+                    List<ItemTarefa> listaItensConcluidos = telaAtualizaItem.ObterItensMarcados();
+                    List<ItemTarefa> listaItensPendentes = telaAtualizaItem.ObterItensPendentes();
+
+                    foreach (ItemTarefa item in listaItensConcluidos)
+                    {
+                        tarefaSelec.ConcluirItem(item);
+                    }
+
+                    foreach (ItemTarefa item in listaItensPendentes)
+                    {
+                        tarefaSelec.DesmarcarItem(item);
+                    }
+
+                    repTarefa.Editar(tarefaSelec.id, tarefaSelec);
                     CarregarTarefas();
                 }
             }
@@ -137,25 +192,39 @@
             {
                 TipoOpcaoFiltragem opFiltragem = telaFiltroTarefa.OpcaoEscolhida();
 
+                List<Tarefa> listaTarefaFiltrada;
+
+                DateTime dataInicio = telaFiltroTarefa.ObterDataInicio;
+                DateTime dataFim = telaFiltroTarefa.ObterDataFinal;
+
                 switch (opFiltragem)
                 {
                     case TipoOpcaoFiltragem.Todas:
-                        CarregarTarefas();
+                        listaTarefaFiltrada = repTarefa.SelecionarTodosPorPrioridade();
+                        CarregarTarefa(listaTarefaFiltrada);
                         break;
 
                     case TipoOpcaoFiltragem.Pendentes:
-
+                        listaTarefaFiltrada = repTarefa.SelecionarPendentes();
+                        CarregarTarefa(listaTarefaFiltrada);
                         break;
 
                     case TipoOpcaoFiltragem.Concluidas:
-
+                        listaTarefaFiltrada = repTarefa.SelecionarConcluidas();
+                        CarregarTarefa(listaTarefaFiltrada);
                         break;
 
                     case TipoOpcaoFiltragem.DataCriacao:
-
+                        listaTarefaFiltrada = repTarefa.SelecionarTarefaPorData(dataInicio, dataFim);
+                        CarregarTarefa(listaTarefaFiltrada);
                         break;
                 }
             }
+        }
+
+        private void CarregarTarefa(List<Tarefa> listaTarefaFiltrada)
+        {
+            tabelaTarefas.AtualizarRegistros(listaTarefaFiltrada);
         }
 
         public enum TipoOpcaoFiltragem
@@ -165,14 +234,14 @@
 
         public override UserControl ObterListagem()
         {
-            if (listagemTarefa == null)
+            if (tabelaTarefas == null)
             {
-                listagemTarefa = new ListagemTarefaControl();
+                tabelaTarefas = new TabelaTarefaControl();
             }
 
             CarregarTarefas();
 
-            return listagemTarefa;
+            return tabelaTarefas;
         }
 
         public override string ObterTipoCadastro()
@@ -182,9 +251,9 @@
 
         private void CarregarTarefas()
         {
-            List<Tarefa> listaTarefas = repositorioTarefa.SelecionarTodos();//esta pegando a lista de Tarefas e jogando para o tarefas
+            List<Tarefa> listaTarefas = repTarefa.SelecionarTodos();//esta pegando a lista de Tarefas e jogando para o tarefas
 
-            listagemTarefa.AtualizarRegistros(listaTarefas);
+            tabelaTarefas.AtualizarRegistros(listaTarefas);
         }
     }
 }

@@ -96,6 +96,7 @@
             btn_gravar.TabIndex = 10;
             btn_gravar.Text = "Gravar";
             btn_gravar.UseVisualStyleBackColor = true;
+            btn_gravar.Click += btn_gravar_Click;
             // 
             // listBox_itens
             // 

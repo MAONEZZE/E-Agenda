@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             groupBox1 = new GroupBox();
+            rdb_todas = new RadioButton();
             rdb_pendentes = new RadioButton();
             rdb_dataCriacao = new RadioButton();
             rdb_concluidos = new RadioButton();
@@ -38,7 +39,6 @@
             label2 = new Label();
             btn_cancel = new Button();
             btn_filtrar = new Button();
-            rdb_todas = new RadioButton();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -54,6 +54,18 @@
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Selecione o tipo de filtragem";
+            // 
+            // rdb_todas
+            // 
+            rdb_todas.AutoSize = true;
+            rdb_todas.Location = new Point(6, 107);
+            rdb_todas.Name = "rdb_todas";
+            rdb_todas.Size = new Size(108, 19);
+            rdb_todas.TabIndex = 4;
+            rdb_todas.TabStop = true;
+            rdb_todas.Text = "Todas as Tarefas";
+            rdb_todas.UseVisualStyleBackColor = true;
+            rdb_todas.CheckedChanged += rdb_todas_CheckedChanged;
             // 
             // rdb_pendentes
             // 
@@ -146,17 +158,6 @@
             btn_filtrar.TabIndex = 10;
             btn_filtrar.Text = "Filtrar";
             btn_filtrar.UseVisualStyleBackColor = true;
-            // 
-            // rdb_todas
-            // 
-            rdb_todas.AutoSize = true;
-            rdb_todas.Location = new Point(6, 107);
-            rdb_todas.Name = "rdb_todas";
-            rdb_todas.Size = new Size(108, 19);
-            rdb_todas.TabIndex = 4;
-            rdb_todas.TabStop = true;
-            rdb_todas.Text = "Todas as Tarefas";
-            rdb_todas.UseVisualStyleBackColor = true;
             // 
             // TelaTarefaFiltro
             // 

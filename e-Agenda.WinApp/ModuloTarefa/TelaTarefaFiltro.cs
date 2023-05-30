@@ -2,6 +2,21 @@
 {
     public partial class TelaTarefaFiltro : Form
     {
+        public DateTime ObterDataInicio
+        {
+            get
+            {
+                return txb_dataInicio.Value;
+            }
+        }
+        public DateTime ObterDataFinal
+        {
+            get
+            {
+                return txb_dataFim.Value;
+            }
+        }
+
         public TelaTarefaFiltro()
         {
             InitializeComponent();
@@ -28,6 +43,12 @@
         {
             txb_dataFim.Enabled = true;
             txb_dataInicio.Enabled = true;
+        }
+
+        private void rdb_todas_CheckedChanged(object sender, EventArgs e)
+        {
+            txb_dataFim.Enabled = false;
+            txb_dataInicio.Enabled = false;
         }
 
         public ControladorTarefa.TipoOpcaoFiltragem OpcaoEscolhida()

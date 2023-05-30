@@ -33,16 +33,12 @@ namespace e_Agenda.WinApp.ModuloContato
 
         private void btnGravar_Click(object sender, EventArgs e)
         {
+            TelaPrincipalForm tlPrinc = TelaPrincipalForm.TelaPrincipal;
             string nome = txb_nome.Text;
-
             string telefone = txb_telefone.Text;
-
             string email = txb_email.Text;
-
             string cargo = txb_cargo.Text;
-
             string empresa = txb_empresa.Text;
-
             contato = new Contato(nome, telefone, email, cargo, empresa);
 
             if (txb_id.Text != "0")
@@ -54,9 +50,12 @@ namespace e_Agenda.WinApp.ModuloContato
 
             if (erros.Length > 0)
             {
-                TelaPrincipalForm tlPrinc = TelaPrincipalForm.TelaPrincipal;
                 tlPrinc.AtualizarRodape(erros[0]);
                 DialogResult = DialogResult.None;
+            }
+            else
+            {
+                tlPrinc.AtualizarRodape("");
             }
         }
 

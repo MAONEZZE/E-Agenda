@@ -40,7 +40,9 @@
             TEntidade registroSelecionado = SelecionarPorId(id);
 
             if (registroSelecionado != null)
+            {
                 listaRegistros.Remove(registroSelecionado);
+            }
         }
 
         public virtual void Excluir(TEntidade registroSelecionado)

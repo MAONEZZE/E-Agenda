@@ -2,6 +2,8 @@ using e_Agenda.WinApp.Compartilhado;
 using e_Agenda.WinApp.ModuloContato;
 using e_Agenda.WinApp.ModuloTarefa;
 using e_Agenda.WinApp.ModuloCompromisso;
+using e_Agenda.WinApp.ModuloDespesas;
+using e_Agenda.WinApp.ModuloCategoriaDespesa;
 
 namespace e_Agenda.WinApp
 {
@@ -10,14 +12,17 @@ namespace e_Agenda.WinApp
         private bool verificadorCadastro = false;
         private ControladorBase controlador;
         private RepositorioContato repContato = new RepositorioContato(new List<Contato>());
-        private RepositorioTarefa repTarefa = new RepositorioTarefa(new List<Tarefa>());
         private RepositorioCompromisso repCompromisso = new RepositorioCompromisso(new List<Compromisso>());
+        private RepositorioTarefa repTarefa = new RepositorioTarefa(new List<Tarefa>());
+        private RepositorioDespesa repDespesa = new RepositorioDespesa(new List<Despesa>());
+        private RepositorioCategoria repCategoria = new RepositorioCategoria(new List<CategoriaDespesa>());
         private static TelaPrincipalForm telaPrincipal;
 
         public TelaPrincipalForm()
         {
             InitializeComponent();
             telaPrincipal = this;
+            Desabilitador();
         }
 
         public static TelaPrincipalForm TelaPrincipal
@@ -33,19 +38,46 @@ namespace e_Agenda.WinApp
 
             }
         }
+        private void Desabilitador()
+        {
+            btn_inserir.Enabled = false;
+            btn_editar.Enabled = false;
+            btn_excluir.Enabled = false;
+
+            btn_filtrar.Enabled = false;
+            btn_listarItens.Enabled = false;
+            btn_concluidos.Enabled = false;
+            btn_abertos.Enabled = false;
+            btn_addItem.Enabled = false;
+        }
+
+        private void Habilitador()
+        {
+            btn_inserir.Enabled = true;
+            btn_editar.Enabled = true;
+            btn_excluir.Enabled = true;
+
+            if (controlador is ControladorCompromisso)
+            {
+                btn_filtrar.Enabled = true;
+            }
+            else if (controlador is ControladorTarefa)
+            {
+                btn_filtrar.Enabled = true;
+                btn_concluidos.Enabled = true;
+                btn_abertos.Enabled = true;
+                btn_addItem.Enabled = true;
+            }
+
+        }
 
         private void contatosMenuItem_Click(object sender, EventArgs e)
         {
             controlador = new ControladorContato(repContato);
             this.verificadorCadastro = true;
 
-            btn_listarItens.Enabled = false;
-            btn_filtrar.Enabled = false;
-
-            btn_listarItens.Enabled = false;
-            btn_concluidos.Enabled = false;
-            btn_abertos.Enabled = false;
-            btn_addItem.Enabled = false;
+            Desabilitador();
+            Habilitador();
 
             ConfigurarTelaPrincipal(controlador);
         }
@@ -55,13 +87,8 @@ namespace e_Agenda.WinApp
             controlador = new ControladorTarefa(repTarefa);
             this.verificadorCadastro = true;
 
-            btn_listarItens.Enabled = true;
-            btn_filtrar.Enabled = true;
-
-            btn_listarItens.Enabled = true;
-            btn_concluidos.Enabled = true;
-            btn_abertos.Enabled = true;
-            btn_addItem.Enabled = true;
+            Desabilitador();
+            Habilitador();
 
             ConfigurarTelaPrincipal(controlador);
         }
@@ -70,15 +97,30 @@ namespace e_Agenda.WinApp
             controlador = new ControladorCompromisso(repContato, repCompromisso);
             this.verificadorCadastro = true;
 
-            btn_listarItens.Enabled = true;
-            btn_filtrar.Enabled = true;
-
-            btn_listarItens.Enabled = false;
-            btn_concluidos.Enabled = false;
-            btn_abertos.Enabled = false;
-            btn_addItem.Enabled = false;
+            Desabilitador();
+            Habilitador();
 
             ConfigurarTelaPrincipal(controlador);//reescrever o metodo equals para comparar objetos
+        }
+
+        private void despesasMenuItem_Click(object sender, EventArgs e)
+        {
+            controlador = new ControladorDespesa(repDespesa, repCategoria);
+
+            Desabilitador();
+            Habilitador();
+
+            ConfigurarTelaPrincipal(controlador);
+        }
+
+        private void categoriasMenuItem_Click(object sender, EventArgs e)
+        {
+            controlador = new ControladorCategoriaDespesa();
+
+            Desabilitador();
+            Habilitador();
+
+            ConfigurarTelaPrincipal(controlador);
         }
 
         private void ConfigurarTelaPrincipal(ControladorBase controladorBase)
@@ -124,49 +166,34 @@ namespace e_Agenda.WinApp
 
         private void btnInserir_Click(object sender, EventArgs e)
         {
-            if (verificadorCadastro == false)
-            {
-                MessageBox.Show("Selecione Um tipo de cadastro!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            else
-            {
-                controlador.Inserir();
-            }
+            controlador.Inserir();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            if (verificadorCadastro == false)
-            {
-                MessageBox.Show("Selecione Um tipo de cadastro!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            else
-            {
-                controlador.Editar();
-            }
+            controlador.Editar();
         }
 
         private void btnExcluir_Click(object sender, EventArgs e)
         {
-            if (verificadorCadastro == false)
-            {
-                MessageBox.Show("Selecione Um tipo de cadastro!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            else
-            {
-                controlador.Excluir();
-            }
+            controlador.Excluir();
         }
 
         private void btn_filtrarTarefas_Click(object sender, EventArgs e)
         {
             controlador.Filtrar();
-
         }
 
         private void btn_addItem_Click(object sender, EventArgs e)
         {
             controlador.AddItem();
         }
+
+        private void btn_concluidos_Click(object sender, EventArgs e)
+        {
+            controlador.ItensConcluidos();
+        }
+
+        
     }
 }

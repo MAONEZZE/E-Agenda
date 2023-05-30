@@ -21,5 +21,22 @@ namespace e_Agenda.WinApp.ModuloTarefa
         {
             return $"Descrição: {descricao} | Status: {status.ToString()}";
         }
+
+        public void Concluir()
+        {
+            status = StatusPendenciaEnum.Concluido;
+        }
+
+        public void Desmarcar()
+        {
+            status = StatusPendenciaEnum.Pendente;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ItemTarefa tarefa &&
+                   descricao == tarefa.descricao &&
+                   status == tarefa.status;
+        }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace e_Agenda.WinApp.ModuloContato
+﻿namespace e_Agenda.WinApp.ModuloTarefa
 {
-    partial class ListagemContatoControl
+    partial class TabelaTarefaControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,31 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            listContato = new ListBox();
+            grid = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)grid).BeginInit();
             SuspendLayout();
             // 
-            // listContato
+            // grid
             // 
-            listContato.Dock = DockStyle.Fill;
-            listContato.FormattingEnabled = true;
-            listContato.ItemHeight = 15;
-            listContato.Location = new Point(0, 0);
-            listContato.Name = "listContato";
-            listContato.Size = new Size(714, 427);
-            listContato.TabIndex = 0;
+            grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            grid.Dock = DockStyle.Fill;
+            grid.Location = new Point(0, 0);
+            grid.Name = "grid";
+            grid.RowTemplate.Height = 25;
+            grid.Size = new Size(547, 365);
+            grid.TabIndex = 0;
             // 
-            // ListagemContatoControl
+            // TabelaTarefaControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(listContato);
-            Name = "ListagemContatoControl";
-            Size = new Size(714, 427);
+            Controls.Add(grid);
+            Name = "TabelaTarefaControl";
+            Size = new Size(547, 365);
+            ((System.ComponentModel.ISupportInitialize)grid).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private ListBox listContato;
+        private DataGridView grid;
     }
 }

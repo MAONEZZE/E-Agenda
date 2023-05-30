@@ -53,11 +53,6 @@ namespace e_Agenda.WinApp.ModuloCompromisso
             }
         }
 
-        public override string ToString()
-        {
-            return $"ID: {id} - Assunto: {assunto} | Data: {data} | Inicio: {horaInicio}";
-        }
-
         public override string[] Validar()
         {
 

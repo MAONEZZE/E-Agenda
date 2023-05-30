@@ -64,6 +64,7 @@ namespace e_Agenda.WinApp.ModuloCompromisso
 
         private void btn_gravar_Click(object sender, EventArgs e)
         {
+            TelaPrincipalForm tlPrinc = TelaPrincipalForm.TelaPrincipal;
             string local = null;
             string assunto = txb_assunto.Text;
 
@@ -93,9 +94,12 @@ namespace e_Agenda.WinApp.ModuloCompromisso
 
             if (erros.Length > 0)
             {
-                TelaPrincipalForm tlPrinc = TelaPrincipalForm.TelaPrincipal;
                 tlPrinc.AtualizarRodape(erros[0]);
                 DialogResult = DialogResult.None;//tem que setar o dialogresult para none para não fechar a janela
+            }
+            else
+            {
+                tlPrinc.AtualizarRodape("");
             }
         }
 

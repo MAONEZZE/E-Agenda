@@ -1,4 +1,6 @@
-﻿namespace e_Agenda.WinApp.ModuloTarefa
+﻿using static e_Agenda.WinApp.ModuloTarefa.Tarefa;
+
+namespace e_Agenda.WinApp.ModuloTarefa
 {
     public partial class TelaTarefaForm : Form
     {
@@ -17,19 +19,20 @@
                 txb_titulo.Text = value.titulo;
                 txb_id.Text = value.id.ToString();
 
-                if (value.prioridade.Equals("Alta"))
+                switch (value.prioridade)
                 {
-                    rb_alta.Checked = true;
-                }
-                else if (value.prioridade.Equals("Média"))
-                {
-                    rb_media.Checked = true;
-                }
-                else if (value.prioridade.Equals("Baixa"))
-                {
-                    rb_baixa.Checked = true;
-                }
+                    case PrioridadeTarefa.Alta:
+                        rb_alta.Checked = true;
+                        break;
 
+                    case PrioridadeTarefa.Media:
+                        rb_media.Checked = true;
+                        break;
+
+                    case PrioridadeTarefa.Baixa:
+                        rb_baixa.Checked = true;
+                        break;
+                }
             }
             get
             {
@@ -40,21 +43,22 @@
         
         private void btn_gravar_Click(object sender, EventArgs e)
         {
+            TelaPrincipalForm tlPrinc = TelaPrincipalForm.TelaPrincipal;
             string titulo = txb_titulo.Text;
             DateTime dataTarefa = txb_data.Value;
-            string prioridade = null;
+            PrioridadeTarefa prioridade = PrioridadeTarefa.Nenhum;
 
             if (rb_alta.Checked)
             {
-                prioridade = "Alta";
+                prioridade = PrioridadeTarefa.Alta;
             }
             else if (rb_media.Checked)
             {
-                prioridade = "Média";
+                prioridade = PrioridadeTarefa.Media;
             }
             else if (rb_baixa.Checked)
             {
-                prioridade = "Baixa";
+                prioridade = PrioridadeTarefa.Baixa;
             }
 
             tarefa = new Tarefa(titulo, prioridade, dataTarefa);
@@ -63,9 +67,12 @@
 
             if (erros.Length > 0)
             {
-                TelaPrincipalForm tlPrinc = TelaPrincipalForm.TelaPrincipal;
                 tlPrinc.AtualizarRodape(erros[0]);
                 DialogResult = DialogResult.None;
+            }
+            else
+            {
+                tlPrinc.AtualizarRodape("");
             }
         }
 

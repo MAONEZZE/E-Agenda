@@ -1,6 +1,6 @@
-﻿namespace e_Agenda.WinApp.ModuloTarefa
+﻿namespace e_Agenda.WinApp.ModuloCategoriaDespesa
 {
-    partial class ListagemTarefaControl
+    partial class TabelaDespesaControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,31 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            listBox_tarefas = new ListBox();
+            grid = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)grid).BeginInit();
             SuspendLayout();
             // 
-            // listBox_tarefas
+            // grid
             // 
-            listBox_tarefas.Dock = DockStyle.Fill;
-            listBox_tarefas.FormattingEnabled = true;
-            listBox_tarefas.ItemHeight = 15;
-            listBox_tarefas.Location = new Point(0, 0);
-            listBox_tarefas.Name = "listBox_tarefas";
-            listBox_tarefas.Size = new Size(522, 383);
-            listBox_tarefas.TabIndex = 0;
+            grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            grid.Dock = DockStyle.Fill;
+            grid.Location = new Point(0, 0);
+            grid.Name = "grid";
+            grid.RowTemplate.Height = 25;
+            grid.Size = new Size(555, 375);
+            grid.TabIndex = 0;
             // 
-            // ListagemTarefaControl
+            // TabelaDespesaControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(listBox_tarefas);
-            Name = "ListagemTarefaControl";
-            Size = new Size(522, 383);
+            Controls.Add(grid);
+            Name = "TabelaDespesaControl";
+            Size = new Size(555, 375);
+            ((System.ComponentModel.ISupportInitialize)grid).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private ListBox listBox_tarefas;
+        private DataGridView grid;
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace e_Agenda.WinApp.ModuloCompromisso
+﻿namespace e_Agenda.WinApp.ModuloDespesas
 {
-    partial class ListagemCompromissoControl
+    partial class TabelaDespesaControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,31 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            listB_compromisso = new ListBox();
+            grid = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)grid).BeginInit();
             SuspendLayout();
             // 
-            // listB_compromisso
+            // grid
             // 
-            listB_compromisso.Dock = DockStyle.Fill;
-            listB_compromisso.FormattingEnabled = true;
-            listB_compromisso.ItemHeight = 15;
-            listB_compromisso.Location = new Point(0, 0);
-            listB_compromisso.Name = "listB_compromisso";
-            listB_compromisso.Size = new Size(424, 303);
-            listB_compromisso.TabIndex = 0;
+            grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            grid.Dock = DockStyle.Fill;
+            grid.Location = new Point(0, 0);
+            grid.Name = "grid";
+            grid.RowTemplate.Height = 25;
+            grid.Size = new Size(396, 294);
+            grid.TabIndex = 0;
             // 
-            // ListagemCompromissoControl
+            // TabelaDespesaControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(listB_compromisso);
-            Name = "ListagemCompromissoControl";
-            Size = new Size(424, 303);
+            Controls.Add(grid);
+            Name = "TabelaDespesaControl";
+            Size = new Size(396, 294);
+            ((System.ComponentModel.ISupportInitialize)grid).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private ListBox listB_compromisso;
+        private DataGridView grid;
     }
 }
