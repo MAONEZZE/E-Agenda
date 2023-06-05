@@ -1,14 +1,19 @@
-﻿using e_Agenda.WinApp.ModuloCategoriaDespesa;
+﻿using e_Agenda.Dominio.ModuloCategoriaDespesa;
 
-namespace e_Agenda.WinApp.ModuloDespesas
+namespace e_Agenda.Dominio.ModuloDespesas
 {
     public class Despesa : EntidadeBase<Despesa>
     {
-        public DateTime data;
-        public string descricao;
-        public decimal valor;
-        public FormaPagamentoEnum pagamento;
-        public List<CategoriaDespesa> listaCategoriasChecked;
+        public DateTime data { get; set; }
+        public string descricao { get; set; }
+        public decimal valor { get; set; }
+        public FormaPagamentoEnum pagamento { get; set; }
+        public List<CategoriaDespesa> listaCategoriasChecked { get; set; }
+
+        public Despesa()
+        {
+            
+        }
 
         public Despesa(DateTime data, string descricao, decimal valor, FormaPagamentoEnum pagamento, List<CategoriaDespesa> listaCategoriasChecked)
         {
@@ -39,7 +44,7 @@ namespace e_Agenda.WinApp.ModuloDespesas
             {
                 listaErros.Add("Campo descrição é obrigatório!");
             }
-            else if (valor < 0 || valor is string)
+            else if (valor < 0)
             {
                 listaErros.Add("Campo valor é obrigatório!");
             }
@@ -54,5 +59,6 @@ namespace e_Agenda.WinApp.ModuloDespesas
 
             return listaErros.ToArray();
         }
+
     }
 }

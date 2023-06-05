@@ -1,4 +1,4 @@
-﻿using static e_Agenda.WinApp.ModuloTarefa.Tarefa;
+﻿using e_Agenda.Dominio.ModuloTarefa;
 
 namespace e_Agenda.WinApp.ModuloTarefa
 {
@@ -21,15 +21,15 @@ namespace e_Agenda.WinApp.ModuloTarefa
 
                 switch (value.prioridade)
                 {
-                    case PrioridadeTarefa.Alta:
+                    case Tarefa.PrioridadeTarefa.Alta:
                         rb_alta.Checked = true;
                         break;
 
-                    case PrioridadeTarefa.Media:
+                    case Tarefa.PrioridadeTarefa.Media:
                         rb_media.Checked = true;
                         break;
 
-                    case PrioridadeTarefa.Baixa:
+                    case Tarefa.PrioridadeTarefa.Baixa:
                         rb_baixa.Checked = true;
                         break;
                 }
@@ -46,19 +46,19 @@ namespace e_Agenda.WinApp.ModuloTarefa
             TelaPrincipalForm tlPrinc = TelaPrincipalForm.TelaPrincipal;
             string titulo = txb_titulo.Text;
             DateTime dataTarefa = txb_data.Value;
-            PrioridadeTarefa prioridade = PrioridadeTarefa.Nenhum;
+            Tarefa.PrioridadeTarefa prioridade = Tarefa.PrioridadeTarefa.Nenhum;
 
             if (rb_alta.Checked)
             {
-                prioridade = PrioridadeTarefa.Alta;
+                prioridade = Tarefa.PrioridadeTarefa.Alta;
             }
             else if (rb_media.Checked)
             {
-                prioridade = PrioridadeTarefa.Media;
+                prioridade = Tarefa.PrioridadeTarefa.Media;
             }
             else if (rb_baixa.Checked)
             {
-                prioridade = PrioridadeTarefa.Baixa;
+                prioridade = Tarefa.PrioridadeTarefa.Baixa;
             }
 
             tarefa = new Tarefa(titulo, prioridade, dataTarefa);

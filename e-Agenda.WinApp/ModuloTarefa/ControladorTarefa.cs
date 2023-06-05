@@ -1,4 +1,5 @@
-﻿using e_Agenda.WinApp.ModuloCompromisso;
+﻿using e_Agenda.Dominio.ModuloTarefa;
+using e_Agenda.Infra.Arquivo.ModuloTarefa;
 
 namespace e_Agenda.WinApp.ModuloTarefa
 {
@@ -7,12 +8,14 @@ namespace e_Agenda.WinApp.ModuloTarefa
         //Além da prioridade, uma tarefa deve conter: o título, a data de criação, data de
         //conclusão e o percentual concluído.
 
-        private RepositorioTarefa repTarefa;
+        private RepositorioArquivoTarefa repTarefa;
+        private RepositorioArquivoItemTarefa repItemTaf;
         private TabelaTarefaControl tabelaTarefas;
 
-        public ControladorTarefa(RepositorioTarefa repositorioTarefa)
+        public ControladorTarefa(RepositorioArquivoTarefa repTarefa, RepositorioArquivoItemTarefa repItemTaf)
         {
-            this.repTarefa = repositorioTarefa;
+            this.repTarefa = repTarefa;
+            this.repItemTaf = repItemTaf;
         }
 
         public override string ToolTipInserir => "Inserir nova Tarefa"; 
@@ -55,6 +58,8 @@ namespace e_Agenda.WinApp.ModuloTarefa
                     repTarefa.Editar(telaTarefa.Tarefa.id, telaTarefa.Tarefa);
 
                     CarregarTarefas();
+
+                    repTarefa.Serializador();
                 }
             }
         }
@@ -87,6 +92,8 @@ namespace e_Agenda.WinApp.ModuloTarefa
                     repTarefa.Excluir(tarefa);
 
                     CarregarTarefas();
+
+                    repTarefa.Serializador();
                 }
             }
         }
@@ -102,12 +109,14 @@ namespace e_Agenda.WinApp.ModuloTarefa
                 Tarefa tarefa = telaTarefa.Tarefa;
 
                 repTarefa.Inserir(tarefa);
-
+                
                 CarregarTarefas();
+
+                repTarefa.Serializador();
             }
         }
 
-        public override void AddItem()//esta duplicando quando tenta adicionar outro item, apos fechar essa tela
+        public override void AddItem()
         {
             Tarefa tarefaSelec = ObterTarefaSelecionada();
 
@@ -134,12 +143,14 @@ namespace e_Agenda.WinApp.ModuloTarefa
                     foreach(ItemTarefa item in listaItens)
                     {
                         tarefaSelec.AdicionarItens(item);
+                        
                     }
 
                     //tarefaSelec.AdicionarItens(listaItens.ElementAt<ItemTarefa>(listaItens.Count - 1));
 
                     repTarefa.Editar(tarefaSelec.id, tarefaSelec);
                     CarregarTarefas();
+                    repTarefa.Serializador();
                 }
             }
         }
@@ -178,6 +189,7 @@ namespace e_Agenda.WinApp.ModuloTarefa
 
                     repTarefa.Editar(tarefaSelec.id, tarefaSelec);
                     CarregarTarefas();
+                    repTarefa.Serializador();
                 }
             }
         }

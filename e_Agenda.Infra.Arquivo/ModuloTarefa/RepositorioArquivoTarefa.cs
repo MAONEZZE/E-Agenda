@@ -1,22 +1,21 @@
-﻿using e_Agenda.WinApp.Compartilhado;
-using e_Agenda.WinApp.ModuloContato;
+﻿using e_Agenda.Dominio.ModuloTarefa;
 
-namespace e_Agenda.WinApp.ModuloTarefa
+namespace e_Agenda.Infra.Arquivo.ModuloTarefa
 {
-    public class RepositorioTarefa : RepositorioBase<Tarefa>
+    public class RepositorioArquivoTarefa : RepositorioArquivoBase<Tarefa>
     {
-        public RepositorioTarefa(List<Tarefa> listaTarefa)
+        public RepositorioArquivoTarefa()
         {
-            this.listaRegistros = listaTarefa;
+            listaRegistros = Desserializador();
         }
 
         public List<Tarefa> SelecionarTarefaPorData(DateTime dataInicio, DateTime dataFim)
         {
             List<Tarefa> listaTarefa = new List<Tarefa>();
 
-            foreach(Tarefa taf in listaRegistros)
+            foreach (Tarefa taf in listaRegistros)
             {
-                if(taf.data >= dataInicio && taf.data <= dataFim)
+                if (taf.data >= dataInicio && taf.data <= dataFim)
                 {
                     listaTarefa.Add(taf);
                 }

@@ -1,15 +1,19 @@
-﻿
-namespace e_Agenda.WinApp.ModuloTarefa
+﻿namespace e_Agenda.Dominio.ModuloTarefa
 {
-    public class ItemTarefa
+    public class ItemTarefa : EntidadeBase<ItemTarefa>
     {
-        public string descricao;
-        public StatusPendenciaEnum status;
+        public string descricao { get; set; }
+        public StatusPendenciaEnum status { get; set; }
 
         public ItemTarefa(string descricao, StatusPendenciaEnum status)
         {
             this.descricao = descricao;
             this.status = status;
+        }
+
+        public ItemTarefa()
+        {
+            
         }
 
         public enum StatusPendenciaEnum
@@ -38,5 +42,10 @@ namespace e_Agenda.WinApp.ModuloTarefa
                    descricao == tarefa.descricao &&
                    status == tarefa.status;
         }
+
+        public override void AtualizarInformacoes(ItemTarefa registrosAtualizados){}
+
+        public override string[] Validar(){ return null; }
+
     }
 }

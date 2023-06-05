@@ -1,14 +1,17 @@
-﻿using e_Agenda.WinApp.ModuloContato;
+﻿using e_Agenda.Dominio.ModuloCompromisso;
+using e_Agenda.Dominio.ModuloContato;
+using e_Agenda.Infra.Arquivo.ModuloCompromisso;
+using e_Agenda.Infra.Arquivo.ModuloContato;
 
 namespace e_Agenda.WinApp.ModuloCompromisso
 {
     public class ControladorCompromisso : ControladorBase
     {
         private TabelaCompromissoControl tabelaCompromisso;
-        private RepositorioContato repContato;
-        private RepositorioCompromisso repCompromisso;
+        private RepositorioArquivoContato repContato;
+        private RepositorioArquivoCompromisso repCompromisso;
 
-        public ControladorCompromisso(RepositorioContato repContato, RepositorioCompromisso repCompromisso)
+        public ControladorCompromisso(RepositorioArquivoContato repContato, RepositorioArquivoCompromisso repCompromisso)
         {
             this.repContato = repContato;
             this.repCompromisso = repCompromisso;
@@ -46,6 +49,8 @@ namespace e_Agenda.WinApp.ModuloCompromisso
                 MessageBox.Show("Compromisso Gravado com sucesso!");
 
                 CarregarCompromisso();
+
+                repCompromisso.Serializador();
             }
         }
 
@@ -78,6 +83,8 @@ namespace e_Agenda.WinApp.ModuloCompromisso
                     repCompromisso.Editar(comp.id, comp);
 
                     CarregarCompromisso();
+
+                    repCompromisso.Serializador();
                 }
             }
         }
@@ -113,6 +120,8 @@ namespace e_Agenda.WinApp.ModuloCompromisso
                     repCompromisso.Excluir(compSelecionado);
 
                     CarregarCompromisso();
+
+                    repCompromisso.Serializador();
                 }
             }
         }

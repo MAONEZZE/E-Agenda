@@ -1,6 +1,6 @@
-﻿namespace e_Agenda.WinApp.Compartilhado
+﻿namespace e_Agenda.Infra.Memoria.Compartilhado
 {
-    public abstract class RepositorioBase<TEntidade>
+    public abstract class RepositorioMemoriaBase<TEntidade> : IRepositorio<TEntidade> 
         where TEntidade : EntidadeBase<TEntidade>
     {
         protected List<TEntidade> listaRegistros;
@@ -28,21 +28,6 @@
             TEntidade registroSelecionado = SelecionarPorId(id);
 
             registroSelecionado.AtualizarInformacoes(registroAtualizado);
-        }
-
-        public virtual void Editar(TEntidade registroSelecionado, TEntidade registroAtualizado)
-        {
-            registroSelecionado.AtualizarInformacoes(registroAtualizado);
-        }
-
-        public virtual void Excluir(int id)
-        {
-            TEntidade registroSelecionado = SelecionarPorId(id);
-
-            if (registroSelecionado != null)
-            {
-                listaRegistros.Remove(registroSelecionado);
-            }
         }
 
         public virtual void Excluir(TEntidade registroSelecionado)

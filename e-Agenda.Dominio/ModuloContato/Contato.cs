@@ -1,14 +1,14 @@
-﻿using e_Agenda.WinApp.Compartilhado;
-
-namespace e_Agenda.WinApp.ModuloContato
+﻿namespace e_Agenda.Dominio.ModuloContato
 {
+
+    [Serializable]
     public class Contato : EntidadeBase<Contato>
     {
         public string nome { get; set; }
         public string telefone { get; set; }
-        public string email;
-        public string cargo;
-        public string empresa;
+        public string email { get; set; }
+        public string cargo { get; set; }
+        public string empresa { get; set; }
 
         public Contato(string nome, string telefone, string email, string cargo, string empresa)
         {
@@ -19,6 +19,10 @@ namespace e_Agenda.WinApp.ModuloContato
             this.empresa = empresa;
         }
 
+        public Contato()
+        {
+        }
+
         public override void AtualizarInformacoes(Contato registrosAtualizados)
         {
             this.nome = registrosAtualizados.nome;
@@ -26,11 +30,6 @@ namespace e_Agenda.WinApp.ModuloContato
             this.email = registrosAtualizados.email;
             this.cargo = registrosAtualizados.cargo;
             this.empresa = registrosAtualizados.empresa;
-        }
-
-        public override string ToString()
-        {
-            return $"Id: {id} - {nome} | Telefone: {telefone} | Empresa: {empresa}";
         }
 
         public override string[] Validar()
@@ -60,5 +59,18 @@ namespace e_Agenda.WinApp.ModuloContato
 
             return listaErros.ToArray();
         }
+
+        //public override JsonObject CarregarJSON()
+        //{
+        //    JsonObject json = new JsonObject();
+
+        //    json.Add("Nome", nome);
+        //    json.Add("telefone", telefone);
+        //    json.Add("email", email);
+        //    json.Add("cargo", cargo);
+        //    json.Add("empresa", empresa);
+
+        //    return json;
+        //}
     }
 }

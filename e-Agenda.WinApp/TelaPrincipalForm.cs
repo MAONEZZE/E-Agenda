@@ -1,21 +1,25 @@
-using e_Agenda.WinApp.Compartilhado;
 using e_Agenda.WinApp.ModuloContato;
 using e_Agenda.WinApp.ModuloTarefa;
 using e_Agenda.WinApp.ModuloCompromisso;
 using e_Agenda.WinApp.ModuloDespesas;
 using e_Agenda.WinApp.ModuloCategoriaDespesa;
+using e_Agenda.Infra.Arquivo.ModuloContato;
+using e_Agenda.Infra.Arquivo.ModuloCompromisso;
+using e_Agenda.Infra.Arquivo.ModuloTarefa;
+using e_Agenda.Infra.Arquivo.ModuloDespesa;
+using e_Agenda.Infra.Arquivo.ModuloCategoriaDespesa;
 
 namespace e_Agenda.WinApp
 {
     public partial class TelaPrincipalForm : Form
     {
-        private bool verificadorCadastro = false;
         private ControladorBase controlador;
-        private RepositorioContato repContato = new RepositorioContato(new List<Contato>());
-        private RepositorioCompromisso repCompromisso = new RepositorioCompromisso(new List<Compromisso>());
-        private RepositorioTarefa repTarefa = new RepositorioTarefa(new List<Tarefa>());
-        private RepositorioDespesa repDespesa = new RepositorioDespesa(new List<Despesa>());
-        private RepositorioCategoria repCategoria = new RepositorioCategoria(new List<CategoriaDespesa>());
+        private RepositorioArquivoContato repContato = new RepositorioArquivoContato();
+        private RepositorioArquivoCompromisso repCompromisso = new RepositorioArquivoCompromisso();
+        private RepositorioArquivoTarefa repTarefa = new RepositorioArquivoTarefa();
+        private RepositorioArquivoItemTarefa repItemTaf = new RepositorioArquivoItemTarefa();
+        private RepositorioArquivoDespesa repDespesa = new RepositorioArquivoDespesa();
+        private RepositorioArquivoCategoria repCategoria = new RepositorioArquivoCategoria();
         private static TelaPrincipalForm telaPrincipal;
 
         public TelaPrincipalForm()
@@ -74,7 +78,6 @@ namespace e_Agenda.WinApp
         private void contatosMenuItem_Click(object sender, EventArgs e)
         {
             controlador = new ControladorContato(repContato);
-            this.verificadorCadastro = true;
 
             Desabilitador();
             Habilitador();
@@ -84,8 +87,7 @@ namespace e_Agenda.WinApp
 
         private void tarefasMenuItem_Click(object sender, EventArgs e)
         {
-            controlador = new ControladorTarefa(repTarefa);
-            this.verificadorCadastro = true;
+            controlador = new ControladorTarefa(repTarefa, repItemTaf);
 
             Desabilitador();
             Habilitador();
@@ -95,7 +97,6 @@ namespace e_Agenda.WinApp
         private void compromissosMenuItem_Click(object sender, EventArgs e)
         {
             controlador = new ControladorCompromisso(repContato, repCompromisso);
-            this.verificadorCadastro = true;
 
             Desabilitador();
             Habilitador();
@@ -115,7 +116,7 @@ namespace e_Agenda.WinApp
 
         private void categoriasMenuItem_Click(object sender, EventArgs e)
         {
-            controlador = new ControladorCategoriaDespesa();
+            controlador = new ControladorCategoriaDespesa(repCategoria);
 
             Desabilitador();
             Habilitador();
@@ -194,6 +195,6 @@ namespace e_Agenda.WinApp
             controlador.ItensConcluidos();
         }
 
-        
+
     }
 }

@@ -1,13 +1,4 @@
-﻿using e_Agenda.WinApp.ModuloContato;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using e_Agenda.Dominio.ModuloCategoriaDespesa;
 
 namespace e_Agenda.WinApp.ModuloCategoriaDespesa
 {
@@ -24,6 +15,11 @@ namespace e_Agenda.WinApp.ModuloCategoriaDespesa
 
         public CategoriaDespesa Categoria
         {
+            set
+            {
+                txb_id.Text = value.id.ToString();
+                txb_titulo.Text = value.titulo;
+            }
             get
             {
                 return categoria;

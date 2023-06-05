@@ -1,14 +1,12 @@
-﻿using e_Agenda.WinApp.Compartilhado;
-
-namespace e_Agenda.WinApp.ModuloTarefa
+﻿namespace e_Agenda.Dominio.ModuloTarefa
 {
     public class Tarefa : EntidadeBase<Tarefa>//Model, Entidade
     {
-        public string titulo;
-        public PrioridadeTarefa prioridade;
-        public DateTime data;
-        public List<ItemTarefa> listaItens;
-        public decimal percConcluido;
+        public string titulo { get; set; }
+        public PrioridadeTarefa prioridade { get; set; }
+        public DateTime data { get; set; }
+        public List<ItemTarefa> listaItens { get; set; }
+        public decimal percConcluido { get; set; }
 
         public Tarefa(string titulo, PrioridadeTarefa prioridade, DateTime data)
         {
@@ -16,6 +14,11 @@ namespace e_Agenda.WinApp.ModuloTarefa
             this.prioridade = prioridade;
             this.data = data;
             this.listaItens = new List<ItemTarefa>();
+        }
+
+        public Tarefa()
+        {
+            
         }
 
         public int QuantItens
@@ -117,7 +120,8 @@ namespace e_Agenda.WinApp.ModuloTarefa
             }
 
             this.percConcluido = Math.Round(contador * 100 / quantItens);
-
         }
+
+
     }
 }

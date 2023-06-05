@@ -1,25 +1,26 @@
 ﻿
 
-using e_Agenda.WinApp.ModuloCategoriaDespesa;
-using System.Linq;
+using e_Agenda.Dominio.ModuloCategoriaDespesa;
+using e_Agenda.Dominio.ModuloDespesas;
 
 namespace e_Agenda.WinApp.ModuloDespesas
 {
     public partial class TelaDespesaForm : Form
     {
         private Despesa despesa;
-        public TelaDespesaForm(RepositorioCategoria repCategoria)
+        public TelaDespesaForm(List<CategoriaDespesa> listaCategoria)
         {
             InitializeComponent();
 
             this.ConfigurarTelas();
-            CarregarCategorias(repCategoria);
+            CarregarCategorias(listaCategoria);
         }
 
         public Despesa DespesaP
         {
             set
             {
+                txb_id.Text = value.id.ToString();
                 txb_descricao.Text = value.descricao;
                 txb_valor.Text = value.valor.ToString();
 
@@ -48,9 +49,9 @@ namespace e_Agenda.WinApp.ModuloDespesas
             }
         }
 
-        private void CarregarCategorias(RepositorioCategoria repCategoria)
+        private void CarregarCategorias(List<CategoriaDespesa> listaCategoria)
         {
-            foreach (CategoriaDespesa cat in repCategoria.SelecionarTodos())
+            foreach (CategoriaDespesa cat in listaCategoria)
             {
                 checkList_categoria.Items.Add(cat);
             }
@@ -61,46 +62,54 @@ namespace e_Agenda.WinApp.ModuloDespesas
         {
             TelaPrincipalForm tlPrinc = TelaPrincipalForm.TelaPrincipal;
 
-            string descricao = txb_descricao.Text;
-
-            DateTime data = txb_data.Value;
-
-            decimal valor = Convert.ToDecimal(txb_valor.Text);
-
-            List<CategoriaDespesa> listaCategoria = ObterCategoriaSelecionada();
-
-            Despesa.FormaPagamentoEnum pagamento = Despesa.FormaPagamentoEnum.Nenhum;
-
-            if (rdb_ctCredito.Checked)
+            try
             {
-                pagamento = Despesa.FormaPagamentoEnum.CartaoCredito;
+                string descricao = txb_descricao.Text;
+
+                DateTime data = txb_data.Value;
+
+                decimal valor = Convert.ToDecimal(txb_valor.Text);
+
+                List<CategoriaDespesa> listaCategoria = ObterCategoriaSelecionada();
+
+                Despesa.FormaPagamentoEnum pagamento = Despesa.FormaPagamentoEnum.Nenhum;
+
+                if (rdb_ctCredito.Checked)
+                {
+                    pagamento = Despesa.FormaPagamentoEnum.CartaoCredito;
+                }
+                else if (rdb_ctDebito.Checked)
+                {
+                    pagamento = Despesa.FormaPagamentoEnum.CartaoDebito;
+                }
+                else if (rdb_dinheiro.Checked)
+                {
+                    pagamento = Despesa.FormaPagamentoEnum.Dinheiro;
+                }
+                else if (rdb_pix.Checked)
+                {
+                    pagamento = Despesa.FormaPagamentoEnum.Pix;
+                }
+
+
+                despesa = new Despesa(data, descricao, valor, pagamento, listaCategoria);
+
+                string[] erros = despesa.Validar();
+
+                if (erros.Length > 0)
+                {
+                    tlPrinc.AtualizarRodape(erros[0]);
+                    DialogResult = DialogResult.None;
+                }
+                else
+                {
+                    tlPrinc.AtualizarRodape("");
+                }
             }
-            else if (rdb_ctDebito.Checked)
+            catch (FormatException ex) 
             {
-                pagamento = Despesa.FormaPagamentoEnum.CartaoDebito;
-            }
-            else if (rdb_dinheiro.Checked)
-            {
-                pagamento = Despesa.FormaPagamentoEnum.Dinheiro;
-            }
-            else if (rdb_pix.Checked)
-            {
-                pagamento = Despesa.FormaPagamentoEnum.Pix;
-            }
-
-
-            despesa = new Despesa(data, descricao, valor, pagamento, listaCategoria);
-
-            string[] erros = despesa.Validar();
-
-            if (erros.Length > 0)
-            {
-                tlPrinc.AtualizarRodape(erros[0]);
+                tlPrinc.AtualizarRodape("Digite um número válido para o campo Valor");
                 DialogResult = DialogResult.None;
-            }
-            else
-            {
-                tlPrinc.AtualizarRodape("");
             }
         }
 

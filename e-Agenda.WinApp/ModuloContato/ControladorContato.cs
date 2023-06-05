@@ -1,14 +1,15 @@
-﻿using e_Agenda.WinApp.Compartilhado;
+﻿using e_Agenda.Dominio.ModuloContato;
+using e_Agenda.Infra.Arquivo.ModuloContato;
 
 namespace e_Agenda.WinApp.ModuloContato
 {
     public class ControladorContato : ControladorBase
     {
         private TelaContatoForm telaContato;
-        private RepositorioContato repContato;
+        private RepositorioArquivoContato repContato;
         private TabelaContatoControl tabelaContato;
 
-        public ControladorContato(RepositorioContato repositorioContato)
+        public ControladorContato(RepositorioArquivoContato repositorioContato)
         {
             this.repContato = repositorioContato;
         }
@@ -34,14 +35,16 @@ namespace e_Agenda.WinApp.ModuloContato
                 MessageBox.Show("Contato Gravado com sucesso!");
 
                 CarregarContatos();
+
+                repContato.Serializador();
             }
         }
 
         public override void Editar()
         {
-            Contato contato = ObterContatoSelecionado();
+            Contato contatoSelec = ObterContatoSelecionado();
 
-            if (contato == null)
+            if (contatoSelec == null)
             {
                 MessageBox.Show($"Selecione um contato primeiro!",
                     "Edição de Contatos",
@@ -51,7 +54,7 @@ namespace e_Agenda.WinApp.ModuloContato
             else
             {
                 TelaContatoForm telaContato = new TelaContatoForm();
-                telaContato.Contato = contato;
+                telaContato.Contato = contatoSelec;
 
                 DialogResult opcao = telaContato.ShowDialog();
 
@@ -60,6 +63,8 @@ namespace e_Agenda.WinApp.ModuloContato
                     repContato.Editar(telaContato.Contato.id, telaContato.Contato);
 
                     CarregarContatos();
+
+                    repContato.Serializador();
                 }
             }
         }
@@ -87,13 +92,15 @@ namespace e_Agenda.WinApp.ModuloContato
             else
             {
                 DialogResult opcao = MessageBox.Show($"Deseja excluir o contato {contato.nome}?", "Exclusão de Contatos",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
                 if (opcao == DialogResult.OK)
                 {
                     repContato.Excluir(contato);
 
                     CarregarContatos();
+
+                    repContato.Serializador();
                 }
             }
         }

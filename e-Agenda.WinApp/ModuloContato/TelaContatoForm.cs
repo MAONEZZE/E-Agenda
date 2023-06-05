@@ -1,5 +1,4 @@
-﻿using e_Agenda.WinApp.Compartilhado;
-using e_Agenda.WinApp.ModuloTarefa;
+﻿using e_Agenda.Dominio.ModuloContato;
 
 namespace e_Agenda.WinApp.ModuloContato
 {

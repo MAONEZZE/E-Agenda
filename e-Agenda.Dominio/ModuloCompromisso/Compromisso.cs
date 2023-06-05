@@ -1,18 +1,18 @@
-﻿using e_Agenda.WinApp.Compartilhado;
-using e_Agenda.WinApp.ModuloContato;
+﻿using e_Agenda.Dominio.ModuloContato;
 
-namespace e_Agenda.WinApp.ModuloCompromisso
+namespace e_Agenda.Dominio.ModuloCompromisso
 {
+    [Serializable]
     public class Compromisso : EntidadeBase<Compromisso>//Arrumar a parte de editar
     {
-        public string assunto;
-        public DateTime data;
-        public TimeSpan horaInicio;
-        public TimeSpan horaFinal;
-        public Contato contato;
-        public string localP;
-        public string localOn;
-        public TipoCompromissoEnum tipoComp;
+        public string assunto { get; set; }
+        public DateTime data { get; set; }
+        public TimeSpan horaInicio { get; set; }
+        public TimeSpan horaFinal { get; set; }
+        public Contato contato { get; set; }
+        public string localP { get; set; }
+        public string localOn { get; set; }
+        public TipoCompromissoEnum tipoComp { get; set; }
 
         public Compromisso(string assunto, DateTime data, TimeSpan horaInicio, TimeSpan horaFinal, Contato contato, string local, TipoCompromissoEnum tipoComp)
         {
@@ -23,39 +23,42 @@ namespace e_Agenda.WinApp.ModuloCompromisso
             this.contato = contato;
             this.tipoComp = tipoComp;
 
-            if(tipoComp == TipoCompromissoEnum.Remoto)
+            if (tipoComp == TipoCompromissoEnum.Remoto)
             {
-                this.localOn = local;
+                localOn = local;
             }
             else
             {
-                this.localP = local;
+                localP = local;
             }
-            
+
+        }
+
+        public Compromisso()
+        {
         }
 
         public override void AtualizarInformacoes(Compromisso registrosAtualizados)
         {
-            this.assunto = registrosAtualizados.assunto;
-            this.data = registrosAtualizados.data;
-            this.horaInicio = registrosAtualizados.horaInicio;
-            this.horaFinal = registrosAtualizados.horaFinal;
-            this.contato = registrosAtualizados.contato;
-            this.tipoComp = registrosAtualizados.tipoComp;
+            assunto = registrosAtualizados.assunto;
+            data = registrosAtualizados.data;
+            horaInicio = registrosAtualizados.horaInicio;
+            horaFinal = registrosAtualizados.horaFinal;
+            contato = registrosAtualizados.contato;
+            tipoComp = registrosAtualizados.tipoComp;
 
             if (registrosAtualizados.tipoComp == TipoCompromissoEnum.Remoto)
             {
-                this.localOn = registrosAtualizados.localOn;
+                localOn = registrosAtualizados.localOn;
             }
             else
             {
-                this.localP = registrosAtualizados.localP;
+                localP = registrosAtualizados.localP;
             }
         }
 
         public override string[] Validar()
         {
-
             List<string> listaErros = new List<string>();
 
             if (string.IsNullOrEmpty(assunto))

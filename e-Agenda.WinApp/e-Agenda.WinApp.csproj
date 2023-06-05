@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\e-Agenda.Dominio\e-Agenda.Dominio.csproj" />
+    <ProjectReference Include="..\e_Agenda.Infra.Arquivo\e_Agenda.Infra.Arquivo.csproj" />
+    <ProjectReference Include="..\e_Agenda.Infra.Memoria\e_Agenda.Infra.Memoria.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

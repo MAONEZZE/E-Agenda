@@ -1,22 +1,21 @@
-﻿using e_Agenda.WinApp.Compartilhado;
+﻿using e_Agenda.Dominio.ModuloCompromisso;
 
-namespace e_Agenda.WinApp.ModuloCompromisso
+namespace e_Agenda.Infra.Memoria.ModuloCompromisso
 {
-    public class RepositorioCompromisso : RepositorioBase<Compromisso>
+    public class RepositorioMemoriaCompromisso : RepositorioMemoriaBase<Compromisso>
     {
-
-        public RepositorioCompromisso(List<Compromisso> listaCompromisso)
+        public RepositorioMemoriaCompromisso(List<Compromisso> listaCompromissos)
         {
-            this.listaRegistros = listaCompromisso;
+            this.listaRegistros = listaCompromissos;
         }
 
         public List<Compromisso> SelecionarCompPassados(DateTime dataAgora)
         {
             List<Compromisso> listaCompPassados = new List<Compromisso>();
 
-            foreach(Compromisso comp in listaRegistros)
+            foreach (Compromisso comp in listaRegistros)
             {
-                if(comp.data < dataAgora)
+                if (comp.data < dataAgora)
                 {
                     listaCompPassados.Add(comp);
                 }

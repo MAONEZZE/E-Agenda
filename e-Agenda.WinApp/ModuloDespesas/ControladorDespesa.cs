@@ -1,21 +1,17 @@
-﻿using e_Agenda.WinApp.ModuloCategoriaDespesa;
-using e_Agenda.WinApp.ModuloCompromisso;
-using e_Agenda.WinApp.ModuloContato;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using e_Agenda.Dominio.ModuloCategoriaDespesa;
+using e_Agenda.Dominio.ModuloDespesas;
+using e_Agenda.Infra.Arquivo.ModuloCategoriaDespesa;
+using e_Agenda.Infra.Arquivo.ModuloDespesa;
 
 namespace e_Agenda.WinApp.ModuloDespesas
 {
     public class ControladorDespesa : ControladorBase
     {
         private TabelaDespesaControl tabelaDespesa;
-        private RepositorioDespesa repDespesa;
-        private RepositorioCategoria repCategoria;
+        private RepositorioArquivoDespesa repDespesa;
+        private RepositorioArquivoCategoria repCategoria;
 
-        public ControladorDespesa(RepositorioDespesa repDespesa, RepositorioCategoria repCategoria)
+        public ControladorDespesa(RepositorioArquivoDespesa repDespesa, RepositorioArquivoCategoria repCategoria)
         {
             this.repDespesa = repDespesa;
             this.repCategoria = repCategoria;
@@ -40,8 +36,8 @@ namespace e_Agenda.WinApp.ModuloDespesas
             }
             else
             {
-                List<Despesa> listaDespesa = repDespesa.SelecionarTodos();
-                TelaDespesaForm telaDespesa = new TelaDespesaForm(repCategoria);
+                List<CategoriaDespesa> listaCategoria = repCategoria.SelecionarTodos();
+                TelaDespesaForm telaDespesa = new TelaDespesaForm(listaCategoria);
 
                 telaDespesa.DespesaP = despesaSelec;
 
@@ -53,7 +49,9 @@ namespace e_Agenda.WinApp.ModuloDespesas
 
                     repDespesa.Editar(despesa.id, despesa);
 
-                    CarregarCompromisso();
+                    CarregarDespesa();
+
+                    repDespesa.Serializador();
                 }
             }
         }
@@ -80,7 +78,9 @@ namespace e_Agenda.WinApp.ModuloDespesas
                 {
                     repDespesa.Excluir(despesaSelec);
 
-                    CarregarCompromisso();
+                    CarregarDespesa();
+
+                    repDespesa.Serializador();
                 }
             }
         }
@@ -94,7 +94,8 @@ namespace e_Agenda.WinApp.ModuloDespesas
 
         public override void Inserir()
         {
-            TelaDespesaForm telaDespesa = new TelaDespesaForm(this.repCategoria);
+            List<CategoriaDespesa> listaCategoria = repCategoria.SelecionarTodos();
+            TelaDespesaForm telaDespesa = new TelaDespesaForm(listaCategoria);
 
             DialogResult opcaoEscolhida = telaDespesa.ShowDialog();
 
@@ -104,17 +105,19 @@ namespace e_Agenda.WinApp.ModuloDespesas
 
                 repDespesa.Inserir(despesa);
 
-                MessageBox.Show("Compromisso Gravado com sucesso!");
+                MessageBox.Show("Despesa gravado com Sucesso!");
 
-                CarregarCompromisso();
+                CarregarDespesa();
+
+                repDespesa.Serializador();
             }
         }
 
-        private void CarregarCompromisso()
+        private void CarregarDespesa()
         {
-            List<Despesa> listadespesa = repDespesa.SelecionarTodos();//esta pegando a lista de Compromisso e jogando para o contatos
+            List<Despesa> listaDespesa = repDespesa.SelecionarTodos();//esta pegando a lista de Compromisso e jogando para o contatos
 
-            tabelaDespesa.AtualizarRegistros(listadespesa);
+            tabelaDespesa.AtualizarRegistros(listaDespesa);
         }
 
         public override UserControl ObterListagem()
@@ -124,7 +127,7 @@ namespace e_Agenda.WinApp.ModuloDespesas
                 tabelaDespesa = new TabelaDespesaControl();
             }
 
-            CarregarCompromisso();
+            CarregarDespesa();
 
             return tabelaDespesa;
         }

@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using e_Agenda.Dominio.ModuloTarefa;
 using System.Data;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static e_Agenda.WinApp.ModuloTarefa.ItemTarefa;
 
 namespace e_Agenda.WinApp.ModuloTarefa
 {
@@ -69,7 +60,7 @@ namespace e_Agenda.WinApp.ModuloTarefa
         private void btn_gravar_Click(object sender, EventArgs e)
         {
             string descricao = txb_descricao.Text;
-            StatusPendenciaEnum status = StatusPendenciaEnum.Pendente;
+            ItemTarefa.StatusPendenciaEnum status = ItemTarefa.StatusPendenciaEnum.Pendente;
 
             this.itemTarefa = new ItemTarefa(descricao, status);
         }
